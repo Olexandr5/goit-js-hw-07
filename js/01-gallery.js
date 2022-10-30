@@ -1,32 +1,32 @@
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
-// console.log(galleryItems);
-const divGallery = document.querySelector('.gallery');
-const creatGallleryMarkap = galleryItems
-  .map(
-    ({ preview, original, description }) =>
-      `<div class="gallery__item">
-  <a class="gallery__link" href="${original}">
+console.log(galleryItems);
+
+const galleryListRefs = document.querySelector('.gallery');
+const markapList = galleryItems
+  .map(img => {
+    return `<div class="gallery__item">
+  <a class="gallery__link" href="${img.original}">
     <img
       class="gallery__image"
-      src="${preview}" 
-      data-source=="${original}"
-      alt="${description}"
+      src="${img.preview}"
+      data-source="${img.original}"
+      alt="${img.description}"
     />
   </a>
-</div>`
-  )
+</div>`;
+  })
   .join('');
-divGallery.innerHTML = creatGallleryMarkap;
-divGallery.addEventListener('click', divGalleryOn);
-function divGalleryOn(event) {
+galleryListRefs.innerHTML = markapList;
+galleryListRefs.addEventListener('click', openModal);
+
+function openModal(event) {
   event.preventDefault();
-  if (!event.target.classList.contains('gallery__image'));
-  {
+  if (!event.target.classList.contains('gallery__image')) {
     return;
   }
   const instance = basicLightbox.create(
-    `img scr = "${event.target.dataset.sourse}" widt="800" heigth="600"`,
+    `<img src="${event.target.dataset.source}" width="800" height="600">`,
     {
       onShow: instance => {
         window.addEventListener('keydown', closeModal);
@@ -41,4 +41,5 @@ function divGalleryOn(event) {
       instance.close();
     }
   }
+  instance.show();
 }
